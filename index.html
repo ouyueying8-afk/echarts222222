@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>暴雨站日数统计图表</title>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #08306B;
+            overflow: hidden;
+        }
+        
+        #chart-container {
+            width: 100%;
+            height: 100vh;
+            min-height: 700px;
+            position: relative;
+        }
+        
+        #main-chart {
+            width: 100%;
+            height: 100%;
+        }
+        
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            #chart-container {
+                height: 800px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            #chart-container {
+                height: 700px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="chart-container">
+        <div id="main-chart"></div>
+    </div>
+
+    <script>
+        // 您的图表配置
+        const option = {
+          backgroundColor: '#08306B',
+          title: {
+            text: ' ',
+            left: 'center',
+            top: 20,
+            textStyle: {
+              fontSize: 20,
+              fontWeight: 'bold',
+              color: '#ffffff'
+            }
+          },
+          tooltip: {
+            trigger: 'item',
+            formatter: '{b}: {c}',
+            backgroundColor: 'rgba(255, 255, 255, 0.9)',
+            borderColor: '#ffffff',
+            textStyle: {
+              color: '#08306B'
+            }
+          },
+          legend: {
+            type: 'scroll',
+            orient: 'horizontal',
+            bottom: 60,
+            left: 'center',
+            icon: 'circle',
+            itemWidth: 12,
+            itemHeight: 12,
+            itemGap: 15,
+            textStyle: {
+              fontSize: 12,
+              color: '#e2e8f0'
+            },
+            data: ['2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024']
+          },
+          graphic: [
+            {
+              type: 'text',
+              left: 'center',
+              bottom: 90,
+              style: {
+                text: '年份',
+                fill: '#e2e8f0',
+                fontSize: 13,
+                fontFamily: 'Arial, sans-serif',
+                fontWeight: 'bold'
+              }
+            },
+            {
+              type: 'text',
+              left: 'center',
+              bottom: 30,
+              style: {
+                text: '数据来源：中国气象局政府门户网站，《近十年我国暴雨变多变强了？大数据揭秘》',
+                fill: '#94a3b8',
+                fontSize: 11,
+                fontFamily: 'Arial, sans-serif',
+                textAlign: 'center'
+              }
+            }
+          ],
+          toolbox: {
+            show: true,
+            top: 20,
+            right: 20,
+            feature: {
+              saveAsImage: {
+                show: true,
+                title: '保存图片',
+                pixelRatio: 2
+              },
+              dataView: {
+                show: true,
+                title: '数据视图',
+                readOnly: true,
+                lang: ['数据视图', '关闭', '刷新']
+              },
+              restore: {
+                show: true,
+                title: '还原'
+              }
+            }
+          },
+          series: [
+            {
+              name: '暴雨站日数',
+              type: 'pie',
+              radius: ['15%', '75%'],
+              center: ['50%', '45%'],
+              roseType: 'area',
+              itemStyle: {
+                borderRadius: 8,
+                borderWidth: 2,
+                borderColor: '#08306B'
+              },
+              label: {
+                show: true,
+                position: 'inside',
+                formatter: function(params) {
+                  return params.value;
+                },
+                fontSize: 14,
+                fontWeight: 'bold',
+                fontFamily: '"Source Han Serif CN", "思源宋体", "SimSun", serif',
+                color: '#08306B',
+                textShadow: '0 1px 2px rgba(255,255,255,0.8)'
+              },
+              labelLine: {
+                show: false
+              },
+              emphasis: {
+                itemStyle: {
+                  shadowBlur: 10,
+                  shadowOffsetX: 0,
+                  shadowColor: 'rgba(255, 255, 255, 0.5)'
+                },
+                label: {
+                  show: true,
+                  fontSize: 16,
+                  fontWeight: 'bold'
+                }
+              },
+              data: [
+                { value: 6000, name: '2014', itemStyle: { color: '#b3d9ff' } },
+                { value: 6600, name: '2015', itemStyle: { color: '#99ccff' } },
+                { value: 7750, name: '2016', itemStyle: { color: '#80bfff' } },
+                { value: 6200, name: '2017', itemStyle: { color: '#66b3ff' } },
+                { value: 6200, name: '2018', itemStyle: { color: '#4da6ff' } },
+                { value: 6400, name: '2019', itemStyle: { color: '#3399ff' } },
+                { value: 7500, name: '2020', itemStyle: { color: '#1a8cff' } },
+                { value: 7667, name: '2021', itemStyle: { color: '#0080ff' } },
+                { value: 6400, name: '2022', itemStyle: { color: '#0073e6' } },
+                { value: 6536, name: '2023', itemStyle: { color: '#0066cc' } },
+                { value: 8186, name: '2024', itemStyle: { color: '#0059b3' } }
+              ]
+            },
+            {
+              type: 'pie',
+              radius: ['75%', '80%'],
+              center: ['50%', '45%'],
+              itemStyle: {
+                color: 'transparent'
+              },
+              label: {
+                position: 'outside',
+                alignTo: 'none',
+                distanceToLabelLine: 5,
+                formatter: '{b}',
+                fontSize: 12,
+                fontWeight: 'normal',
+                fontFamily: 'Arial, sans-serif',
+                color: '#e2e8f0'
+              },
+              labelLine: {
+                show: false,
+              },
+              data: [
+                { value: 6000, name: '2014' },
+                { value: 6600, name: '2015' },
+                { value: 7750, name: '2016' },
+                { value: 6200, name: '2017' },
+                { value: 6200, name: '2018' },
+                { value: 6400, name: '2019' },
+                { value: 7500, name: '2020' },
+                { value: 7667, name: '2021' },
+                { value: 6400, name: '2022' },
+                { value: 6536, name: '2023' },
+                { value: 8186, name: '2024' }
+              ],
+              silent: true
+            }
+          ]
+        };
+
+        // 初始化图表
+        window.onload = function() {
+            const chartDom = document.getElementById('main-chart');
+            const myChart = echarts.init(chartDom);
+            
+            // 应用配置
+            myChart.setOption(option);
+            
+            // 响应窗口大小变化
+            window.addEventListener('resize', function() {
+                myChart.resize();
+            });
+        };
+    </script>
+</body>
+</html>
